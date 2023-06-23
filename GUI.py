@@ -9,8 +9,14 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 import pandas as pd
 import numpy as np
-from sklearn.model_selection import train_test_split
+
+from sklearn.model_selection import train_test_split, KFold
+
 from sklearn.preprocessing import MaxAbsScaler
+from sklearn.model_selection import cross_val_score
+from skopt.space import Real, Integer
+from skopt.utils import use_named_args
+from skopt import gp_minimize
 from joblib import load
 from joblib import dump
 
@@ -42,6 +48,7 @@ class Ui_MainWindow(object):
                 X_train_org, X_test, y_train_org, y_test, id_train, id_test = train_test_split(X, y, ids,
                                                                                                test_size=0.15,
                                                                                                random_state=i)
+                # X_train, y_train = generate_data(X_train_org, y_train_org)
                 scaler = MaxAbsScaler().fit(X_train_org)
                 xgb = load(name_1[i-1])
                 result_xgb.append(xgb.predict(scaler.transform(X_predict))*y_max)
@@ -846,12 +853,12 @@ class Ui_MainWindow(object):
         self.label_depart.setText(_translate("MainWindow", "Department of Concrete Structures, Hanoi University of Civil Engineering, Vietnam"))
         self.label_email.setText(_translate("MainWindow", "Email: ledainhan.huce@gmail.com"))
         self.groupBox_authors_2.setTitle(_translate("MainWindow", "Abstract"))
-        self.label_tw_4.setText(_translate("MainWindow", "This GUI tool was programmedas part of a article, namely \" Novel hybrid Machine learning with Egret Swarm Optimization Algorithm method for patch loading"))
-        self.label_tw_5.setText(_translate("MainWindow", "resistance prediction of longitudinally unstiffened and stiffened plate girders\".It allows you to predict the patch loading resistance of longitudinally unstiffened"))
-        self.label_tw_6.setText(_translate("MainWindow", "training set which was resampled by using Weighted Relevance-based Combination Strategy (WERCS) method, and hyperparameters of XGB model were"))
-        self.label_tw_7.setText(_translate("MainWindow", "optimized by using Egret Swarm Optimization Algorithm ( ESOA) algorithm to have the best performance. This process was repeated twenty times and then "))
-        self.label_tw_8.setText(_translate("MainWindow", "the average result which comes from 20 independent models is output as the final performance."))
-        self.label_tw_9.setText(_translate("MainWindow", "and stiffened plate girders by defining various inputs. As mentioned in this paper, in this GUI tool, Extreme Gradient Boosting algorithm (XGB) was trained with "))
+        self.label_tw_4.setText(_translate("MainWindow", "This GUI tool was programmedas part of a article, namely \" Novel hybrid Machine learning with Optimization Algorithm and Resampling methods for patch"))
+        self.label_tw_5.setText(_translate("MainWindow", "load resistance prediction of unstiffened and stiffened plate girders\".It allows to predict the patch loading resistance of longitudinally unstiffened and stiffened "))
+        self.label_tw_6.setText(_translate("MainWindow", "set which was resampled by using Weighted Relevance-based Combination Strategy (WERCS) method, and hyperparameters of XGB model were optimized "))
+        self.label_tw_7.setText(_translate("MainWindow", "by using Egret Swarm Optimization Algorithm ( ESOA) algorithm to have the best performance. This process was repeated twenty times and then the average "))
+        self.label_tw_8.setText(_translate("MainWindow", "result which comes from 20 independent models is output as the final performance."))
+        self.label_tw_9.setText(_translate("MainWindow", "plate girders by defining various inputs. As mentioned in this paper, in this GUI tool, Extreme Gradient Boosting algorithm (XGB) was trained with training "))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "About"))
         self.pushButton_predict.clicked.connect(self.predict_model_1)
         self.pushButton_cancel.clicked.connect(self.cancel_process)
